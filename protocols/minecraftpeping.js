@@ -36,7 +36,7 @@ class MinecraftPEPing extends require('./core') {
                     var serverNameLen = reader.uint(4);
                     var serverName = reader.string(serverNameLen);
 
-                    var token = serverName.split(/(?<!\\\\);/);
+                    var token = serverName.split(/(?<!\\);/);
                     var raw = {
                         hostname: token[1],
                         version: token[3],
