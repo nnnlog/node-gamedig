@@ -11,7 +11,8 @@ class Core extends EventEmitter {
         this.options = {
             socketTimeout: 1000,
             attemptTimeout: 10000,
-            maxAttempts: 1
+            maxAttempts: 1,
+            fatalInterval: 2000
         };
         this.attempt = 1;
         this.finished = false;
@@ -23,9 +24,12 @@ class Core extends EventEmitter {
     }
 
     fatal(err,noretry) {
+        console.log(err + ' (' + this.attempt + '/' + this.options.maxAttempts + ')');
         if(!noretry && this.attempt < this.options.maxAttempts) {
-            this.attempt++;
-            this.start();
+            setTimeout(() => {
+                this.attempt++;
+                this.start();
+            }, this.options.fatalInterval);
             return;
         }
 

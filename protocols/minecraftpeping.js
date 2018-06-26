@@ -40,10 +40,25 @@ class MinecraftPEPing extends require('./core') {
                     var raw = {
                         hostname: token[1],
                         version: token[3],
-                        numplayers: parseInt(token[4]),
-                        maxplayers: parseInt(token[5]),
+                        numplayers: token[4],
+                        maxplayers: token[5],
                         server_engine: token[7]
                     };
+
+                    // validate numeric values
+                    if(!this.isNaturalNumber(raw.numplayers) || !this.isNaturalNumber(raw.maxplayers)){
+                        this.fatal('Invalid value given');
+                        return true;
+                    }
+
+                    raw.numplayers = parseInt(raw.numplayers);
+                    raw.maxplayers = parseInt(raw.maxplayers);
+
+                    // if users are 0 (may rebooting) and remain chance
+                    if(raw.numplayers == 0 && this.attempt < this.options.maxAttempts){
+                        this.fatal('Server may be rebooting, try again');
+                        return true;
+                    }
 
                     state.raw = raw;
 
@@ -54,6 +69,13 @@ class MinecraftPEPing extends require('./core') {
                 });
             }
         ]);
+    }
+
+    isNaturalNumber(n) {
+        if(!n) return false;
+        n = n.toString();
+        var n1 = Math.abs(n), n2 = parseInt(n, 10);
+        return !isNaN(n1) && n2 === n1 && n1.toString() === n;
     }
 }
 
