@@ -24,7 +24,7 @@ class Core extends EventEmitter {
     }
 
     fatal(err,noretry) {
-        console.log(err + ' (' + this.attempt + '/' + this.options.maxAttempts + ')');
+        // console.log(err + ' (' + this.attempt + '/' + this.options.maxAttempts + ')');
         if(!noretry && this.attempt < this.options.maxAttempts) {
             setTimeout(() => {
                 this.attempt++;
