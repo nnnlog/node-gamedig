@@ -4,7 +4,7 @@ class Gamespy3 extends require('./core') {
     constructor() {
         super();
         this.sessionId = 1;
-        this.encoding = 'latin1';
+        this.encoding = 'utf8';
         this.byteorder = 'be';
         this.noChallenge = false;
         this.useOnlySingleSplit = false;
