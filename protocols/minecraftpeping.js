@@ -19,7 +19,7 @@ class MinecraftPEPing extends require('./core') {
 
                 // Ping ID
                 const pingID = Buffer.alloc(8);
-                pingID.writeUIntBE(0xff, 0, 8); // random
+                // pingID.writeUIntBE(0xff, 0, 8); // random
 
                 // Write Magic
                 const magic = Buffer.from(this.magic);
