@@ -23,9 +23,12 @@ class MinecraftPEPing extends require('./core') {
 
                 // Write Magic
                 const magic = Buffer.from(this.magic);
+                
+                // Write Client ID
+                const clientId = Buffer.alloc(8);
 
                 // concatenation
-                const b = Buffer.concat([ID, pingID, magic]);
+                const b = Buffer.concat([ID, pingID, magic, clientId]);
 
                 this.udpSend(b, (buffer) => {
                     const reader = this.reader(buffer);
